@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Dancing Columns</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <style>
+            body {
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .container {
+                display: flex;
+                width: 95vw;
+                height: 50%;
+                justify-content: space-around;
+                flex-direction: row;
+                border: 10px solid black;
+                align-items: end;
+            }
+
+            .column {
+                width: 20%;
+                height: 100%;
+                transition: height 0.3s linear;
+            }
+
+            .column:nth-child(1) {
+                background-color: purple;
+            }
+
+            .column:nth-child(2) {
+                background-color: pink;
+            }
+
+            .column:nth-child(3) {
+                background-color: violet;
+            }
+
+            .column:nth-child(4) {
+                background-color: red;
+            }
+
+            .column:nth-child(5) {
+                background-color: yellow;
+            }
+
+            .button-container {
+                margin-top: 20px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+                width: 95vw;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .btn-start {
+                background-color: green;
+            }
+
+            .btn-reset {
+                background-color: purple;
+            }
+
+            .btn-stop {
+                background-color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+        </div>
+        <div class="button-container">
+            <button id="startButton" class="btn btn-start">Start</button>
+            <button id="resetButton" class="btn btn-reset">Reset</button>
+            <button id="stopButton" class="btn btn-stop">Stop</button>
+        </div>
+
+        <script>
+            let danceInterval;
+            let isDancing = false;
+            const columns = document.querySelectorAll('.column');
+            const startButton = document.getElementById('startButton');
+            startButton.addEventListener('click', startDance);
+            const resetButton = document.getElementById('resetButton');
+            resetButton.addEventListener('click', resetDance);
+            const stopButton = document.getElementById('stopButton');
+            stopButton.addEventListener('click', stopDance);
+            
+            function startDance() {
+                if (isDancing) return;
+                
+                isDancing = true;
+                danceInterval = setInterval(() => {
+                    columns.forEach((column, index) => {
+                        const randomHeight = Math.random() * 100;
+                        column.style.height = randomHeight + '%';
+                    });
+                }, 500);
+            }
+            
+            function stopDance() {
+                isDancing = false;
+                clearInterval(danceInterval);
+            }
+            
+            function resetDance() {
+                stopDance();
+                columns.forEach(column => {
+                    column.style.height = '100%';
+                });
+            }
+        </script>
+    </body>
+
+</html>
+
+
